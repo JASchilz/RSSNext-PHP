@@ -1,0 +1,9 @@
+{
+    "require": {
+        "facebook/php-sdk-v4" : "4.0.*",
+        "google/apiclient": "1.0.*@beta"
+    },
+    "require-dev": {
+        "phpunit/phpunit-selenium": ">=1.2"
+    }
+}

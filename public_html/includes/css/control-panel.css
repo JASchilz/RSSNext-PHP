@@ -1,0 +1,146 @@
+#header-sitetitle {
+
+    font-family:Verdana, Geneva, sans-serif;
+    font-size:120px
+
+}
+
+#subheader-info {
+
+    width:40%;
+    margin-left:auto; margin-right:auto;
+    text-align:center;
+
+}
+
+#more-info {
+
+    margin-top:80px;
+    width:40%;
+    margin-left:auto; margin-right:auto;
+    text-align:center;
+
+}
+
+#that-info {
+
+    margin-top:60px;
+
+}
+
+#service_message {
+
+    margin-top:100px;
+    
+}
+
+#login-create {
+    width:850px;
+    margin-left:auto; margin-right:auto;
+    margin-top:40px;
+    margin-bottom:50px
+}
+
+#login-create-problem {
+    width:850px;
+    border-color:red;
+    text-align:center;
+    background-color:#FCF7F7;
+    
+}
+
+.box {
+
+    width:600px;
+    margin-left:auto; margin-right:auto;
+    padding:10px;
+    border:1px solid gray;
+    
+    border-radius:15px;
+    background-color:#F7F7F7;
+    clear:both;
+    font-size:small
+
+}
+
+table {
+    margin-bottom: 0px !important;
+}
+
+p.feedList {
+    margin:.1em;
+}
+
+div.feedList {
+
+    float:right;
+
+    width:620px;
+    height:1.4em;
+    /*overflow:hidden;*/
+    margin:3px;
+    background-color:#F7F7F7;
+    border:1px solid gray;
+    
+    
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+
+div.reportProblem {
+    float:right;
+    font-size:small;
+    width:140px;
+    height:10px;
+    line-height:10px;
+    color:blue;
+    text-decoration:underline;
+    cursor:pointer;
+}
+
+div.feedListContainer {
+
+    width:790px;
+    margin-left:auto;
+    margin-right:auto;
+    position:relative;
+    height:1em;
+    clear:both;
+    /*height:4em;
+    
+    overflow:hidden;
+    margin:3px;
+    border:1px solid;*/
+}
+
+div.remove {
+    float:left;
+    cursor:pointer;
+    height:20px;
+    width:20px;
+    background-repeat:no-repeat;
+    background-position:center;
+    background-image:url('/includes/media/remove.png');
+}
+
+.form-inline {
+    margin-bottom:20px;
+}
+
+#url-input {
+    width:60%;
+}
+
+#url-table-head {
+    width:70%
+}
+
+.rssnext-link {
+    color:blue;
+    text-decoration:underline;
+}
+
+nav {
+    padding-left:5%;
+    padding-right:10%
+}
