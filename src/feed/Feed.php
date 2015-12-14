@@ -111,7 +111,8 @@ EOT;
         return new self($row['url'], $row['feed_id']);
     }
 
-    protected static function getFeedContents($url) {
+    protected static function getFeedContents($url)
+    {
         $ch = curl_init();
 
         curl_setopt($ch, CURLOPT_TIMEOUT, 10);
