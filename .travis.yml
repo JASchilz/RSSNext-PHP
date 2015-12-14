@@ -2,6 +2,9 @@ language: php
 php:
   - 5.6
   - 7.0
+addons:
+  hosts:
+    - local.rssnext.net
 before_install:
   - mysql -e "create database IF NOT EXISTS rssnext;" -uroot
   - mysql -uroot rssnext < rssnext.sql
@@ -18,7 +21,7 @@ before_script:
   - sleep 15  # to wait for Selenium to be up and running
   - composer install
 script:
-  - phpunit --configuration test/phpunit.xml test
+  - phpunit -v --configuration test/phpunit.xml test
   - ./vendor/bin/phpcs --ignore=*/vendor/*,*/test/*,*/bin/*,*bootstrap.css,*settings.php --standard=PSR2 .
 after_script:
   - vendor/bin/test-reporter

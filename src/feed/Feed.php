@@ -66,7 +66,7 @@ EOT;
 
             // First, test whether there is a feed at the given url
             try {
-                $contents = file_get_contents($url);
+                $contents = static::getFeedContents($url);
                 $xmlContents = new \SimpleXmlElement($contents);
             } catch (\Exception $e) {
                 throw new NotFoundException();
@@ -111,13 +111,27 @@ EOT;
         return new self($row['url'], $row['feed_id']);
     }
 
+    protected static function getFeedContents($url) {
+        $ch = curl_init();
+
+        curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+        curl_setopt($ch, CURLOPT_HEADER, 0);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_URL, $url);
+
+        $data = curl_exec($ch);
+        curl_close($ch);
+
+        return $data;
+    }
+
     public function update()
     {
         // Query the feed uri, find new feed items, and record them in the database.
 
         $con = Connection::getConnection();
 
-        $feedContents = file_get_contents($this->url);
+        $feedContents = $this->getFeedContents($this->url);
         $xmlFeedContents = new \SimpleXmlElement($feedContents);
 
         $items = array();
@@ -164,7 +178,7 @@ EOT;
         $this->lastItemId = $con->insert_id + $con->affected_rows - 1;
     }
 
-    private static function parseItem($entry, $feedId)
+    protected static function parseItem($entry, $feedId)
     {
         // Helper function that takes an xml feed entry item and returns an object
 

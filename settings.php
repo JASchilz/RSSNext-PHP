@@ -1,5 +1,7 @@
 <?php
 
+ini_set('default_socket_timeout', 10);
+
 // get DB_PASSWORD, FACEBOOK_SECRET from secret_settings
 require_once dirname(__FILE__) . '/local_settings.php';
 

@@ -10,13 +10,15 @@ function randomChars($numChars) {
 
 class WebTest extends PHPUnit_Extensions_Selenium2TestCase
 {
-    var $username;
-    var $password;
+    protected $username;
+    protected $password;
+    
+    protected $baseUrl = "http://localhost:8001";
 
     protected function setUp()
     {
         $this->setBrowser('firefox');
-        $this->setBrowserUrl('http://local.rssnext.net');
+        $this->setBrowserUrl($this->baseUrl);
 
         $this->username = randomChars(10)."@example.com";
         $this->password = randomChars(10);
@@ -30,7 +32,7 @@ class WebTest extends PHPUnit_Extensions_Selenium2TestCase
     }
 
     protected function createUser() {
-        $this->url('http://local.rssnext.net');
+        $this->url($this->baseUrl);
         $this->assertEquals('RSSNext - One Click Takes You To Your Next Unread Item', $this->title());
 
         $this->byCssSelector('#signup-form #id_username')->click();
@@ -47,7 +49,7 @@ class WebTest extends PHPUnit_Extensions_Selenium2TestCase
 
     public function testTitle()
     {
-        $this->url('http://local.rssnext.net');
+        $this->url($this->baseUrl);
         $this->assertEquals('RSSNext - One Click Takes You To Your Next Unread Item', $this->title());
     }
 
@@ -80,20 +82,20 @@ class WebTest extends PHPUnit_Extensions_Selenium2TestCase
         $this->assertEquals('RSSNext Home', $this->title());
 
         // Assert that the feed is not yet added
-        $this->assertNotContains( 'local.rssnext.net/includes/xml/sample.rss', $this->byId('your-feeds')->text());
+        $this->assertNotContains( "/includes/xml/sample.rss", $this->byId('your-feeds')->text());
 
         $this->byId("url-input")->click();
-        $this->keys("local.rssnext.net/includes/xml/sample.rss");
+        $this->keys("{$this->baseUrl}/includes/xml/sample.rss");
         $this->byCssSelector('#add-feed-form button')->click();
 
         sleep(1);
 
         // Assert that the feed has been added
-        $this->assertContains( 'local.rssnext.net/includes/xml/sample.rss', $this->byId('your-feeds')->text());
+        $this->assertContains( '/includes/xml/sample.rss', $this->byId('your-feeds')->text());
 
         // And that it's still there after a refresh
         $this->refresh();
-        $this->assertContains( 'local.rssnext.net/includes/xml/sample.rss', $this->byId('your-feeds')->text());
+        $this->assertContains( '/includes/xml/sample.rss', $this->byId('your-feeds')->text());
     }
 
     public function testRemoveFeed()
@@ -103,25 +105,25 @@ class WebTest extends PHPUnit_Extensions_Selenium2TestCase
 
         // Add the feed
         $this->byId("url-input")->click();
-        $this->keys("local.rssnext.net/includes/xml/sample.rss");
+        $this->keys("{$this->baseUrl}/includes/xml/sample.rss");
         $this->byCssSelector('#add-feed-form button')->click();
 
         sleep(1);
 
         // Assert that the feed has been added
-        $this->assertContains( 'local.rssnext.net/includes/xml/sample.rss', $this->byId('your-feeds')->text());
+        $this->assertContains( '/includes/xml/sample.rss', $this->byId('your-feeds')->text());
 
         // Click the remove button
-        $this->byCssSelector(".remove[data-for-feed-url='http://local.rssnext.net/includes/xml/sample.rss']")->click();
+        $this->byCssSelector(".remove[data-for-feed-url='{$this->baseUrl}/includes/xml/sample.rss']")->click();
         $this->acceptAlert();
         sleep(1);
 
         // Assert that the feed has been removed
-        $this->assertNotContains( 'local.rssnext.net/includes/xml/sample.rss', $this->byId('your-feeds')->text());
+        $this->assertNotContains( '/includes/xml/sample.rss', $this->byId('your-feeds')->text());
 
         // Assert that it is still removed after refresh
         $this->refresh();
-        $this->assertNotContains( 'local.rssnext.net/includes/xml/sample.rss', $this->byId('your-feeds')->text());
+        $this->assertNotContains( '/includes/xml/sample.rss', $this->byId('your-feeds')->text());
     }
 
     public function testGetFeeds()
@@ -131,11 +133,11 @@ class WebTest extends PHPUnit_Extensions_Selenium2TestCase
 
         // Add the feeds
         $this->byId("url-input")->click();
-        $this->keys("local.rssnext.net/includes/xml/sample.rss");
+        $this->keys("{$this->baseUrl}/includes/xml/sample.rss");
         $this->byCssSelector('#add-feed-form button')->click();
         sleep(1);
         $this->byId("url-input")->click();
-        $this->keys("local.rssnext.net/includes/xml/sample_2.rss");
+        $this->keys("{$this->baseUrl}/includes/xml/sample_2.rss");
         $this->byCssSelector('#add-feed-form button')->click();
         sleep(1);
 
@@ -143,8 +145,8 @@ class WebTest extends PHPUnit_Extensions_Selenium2TestCase
         $this->refresh();
 
         // Assert that the control panel lists the feeds
-        $this->assertContains( 'local.rssnext.net/includes/xml/sample.rss', $this->byId('your-feeds')->text());
-        $this->assertContains( 'local.rssnext.net/includes/xml/sample_2.rss', $this->byId('your-feeds')->text());
+        $this->assertContains( '/includes/xml/sample.rss', $this->byId('your-feeds')->text());
+        $this->assertContains( '/includes/xml/sample_2.rss', $this->byId('your-feeds')->text());
     }
 
 }
