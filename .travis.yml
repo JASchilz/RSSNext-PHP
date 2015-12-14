@@ -7,6 +7,7 @@ before_install:
   - mysql -uroot rssnext < rssnext.sql
 before_script:
   - sed -i '/phpdoc/d' composer.json
+  - printf "<?php\ndefine('DB_USERNAME', 'root');\ndefine('DB_PASSWORD','');\n" > local_settings.php
   - composer install
 script:
   - phpunit --configuration test/phpunit.xml test
