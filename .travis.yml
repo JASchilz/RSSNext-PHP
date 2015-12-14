@@ -16,8 +16,8 @@ before_script:
   - sleep 3
   - "php -S localhost:8001 -t public_html/ > /dev/null 2>&1 &"
   - sleep 3
-  - wget http://selenium.googlecode.com/files/selenium-server-standalone-2.15.0.jar
-  - java -jar selenium-server-standalone-2.15.0.jar > /dev/null 2>&1 &
+  - wget http://selenium-release.storage.googleapis.com/2.48/selenium-server-standalone-2.48.2.jar
+  - java -jar selenium-server-standalone-2.48.2.jar > /dev/null 2>&1 &
   - sleep 15  # to wait for Selenium to be up and running
   - composer install
 script:
