@@ -4,7 +4,7 @@ php:
   - 7.0
 before_install:
   - mysql -e "create database IF NOT EXISTS rssnext;" -uroot
-  - mysql -uroot rssnext > rssnext.sql
+  - mysql -uroot rssnext < rssnext.sql
 before_script:
   - sed -i '/phpdoc/d' composer.json
   - composer install
