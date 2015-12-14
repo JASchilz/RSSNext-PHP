@@ -1,7 +1,5 @@
 <?php
 
-define('SHOW_ERRORS', false);
-
 require_once dirname(__FILE__) . '/../setup.php';
 
 use RSSNext\Connection\Connection;
