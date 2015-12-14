@@ -1,9 +1,23 @@
 {
-    "require": {
-        "facebook/php-sdk-v4" : "4.0.*",
-        "google/apiclient": "1.0.*@beta"
-    },
-    "require-dev": {
-        "phpunit/phpunit-selenium": ">=1.2"
-    }
+  "name": "jaschilz/rssnext-php",
+  "description": "RSS manager in PHP",
+  "autoload": {
+    "classmap": [
+      "src/"
+    ]
+  },
+  "autoload-dev": {
+    "classmap": [
+      "test/"
+    ]
+  },
+  "require": {
+    "facebook/php-sdk-v4" : "4.0.*",
+    "ext-mbstring": "*"
+  },
+  "require-dev": {
+    "phpunit/phpunit-selenium": ">=1.2",
+    "codeclimate/php-test-reporter": "dev-master",
+    "squizlabs/php_codesniffer": "2.*"
+  }
 }

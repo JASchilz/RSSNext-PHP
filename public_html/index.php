@@ -1,8 +1,10 @@
 <?php
-require_once dirname(__FILE__).'/../utils/sessions.php';
+require_once dirname(__FILE__) . '/../setup.php';
+
+use RSSNext\Util\Util;
 
 // If the user is logged in, send them to the control panel
-if (initSession()) {
+if (Util::initSession()) {
     header('Location: control_panel.php');
 }
 
@@ -28,10 +30,9 @@ if (initSession()) {
     <link href='includes/css/login.css' rel="stylesheet">
 
     <!-- Custom js -->
-    <script type="application/x-javascript" src="includes/js/init.js"></script>
+    <script type="application/x-javascript" src="includes/js/social_login.js"></script>
 
 </head>
-<body onload="fbInit();">
 
 <div class="container">
 

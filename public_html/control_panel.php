@@ -1,7 +1,10 @@
 <?php
-require_once dirname(__FILE__) . '/../utils/sessions.php';
 
-$uid = initOrBump();
+require_once dirname(__FILE__) . '/../setup.php';
+
+use RSSNext\Util\Util;
+
+$uid = Util::initOrBump();
 
 ?>
 <!DOCTYPE html>
@@ -24,7 +27,7 @@ $uid = initOrBump();
     <link rel="stylesheet" type="text/css" href="includes/css/control-panel.css">
 
     <!-- Custom js -->
-    <script type="application/x-javascript" src="includes/js/init.js"></script>
+    <script type="application/x-javascript" src="includes/js/control_panel_init.js"></script>
     <script type="application/x-javascript" src="includes/js/actions.js"></script>
     <script type="application/x-javascript" src="includes/js/ajax.js"></script>
     <script type="application/x-javascript" src="includes/js/utils.js"></script>
@@ -37,7 +40,10 @@ $uid = initOrBump();
 <nav class="navbar navbar-default" role="navigation">
     <div class="container-fluid">
         <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-1">
+            <button type="button"
+                    class="navbar-toggle collapsed"
+                    data-toggle="collapse"
+                    data-target="#navbar-collapse-1">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
@@ -54,7 +60,9 @@ $uid = initOrBump();
 
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">
-                    <a id="account-dropdown" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Account <span class="caret"></span></a>
+                    <a id="account-dropdown"
+                       href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                       aria-expanded="false">Account <span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
                         <li><a id="logout" href="/logout.php">Logout</a></li>
                     </ul>
@@ -68,7 +76,7 @@ $uid = initOrBump();
 
             <form id="add-feed-form" class="form-inline" role="form">
                 <input id="url-input" type="text" class="form-control" placeholder="Feed URL">
-                <button class="btn btn-default" onclick="handleURLSubmit();">Add Subscription</button>
+                <button class="btn btn-default" onclick="handleURLSubmit();return false;">Add Subscription</button>
             </form>
 
             <div class="panel panel-default">
@@ -90,24 +98,29 @@ $uid = initOrBump();
             bookmarks toolbar. Then click the link to visit your next unread item.</p></div>
 
     <!-- Instructions Modal -->
-    <div class="modal fade" id="instructions-modal" role="dialog" aria-labelledby="my-modal-label" aria-hidden="true" style="display: none;">
+    <div class="modal fade" id="instructions-modal" role="dialog" aria-labelledby="my-modal-label"
+         aria-hidden="true" style="display: none;">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">×</span>
+                        <span class="sr-only">Close</span>
+                    </button>
                     <h4 class="modal-title" id="my-modal-label">How To Use RSSNext</h4>
                 </div>
                 <div class="modal-body">
                     <h4>Reading Your Feeds</h4>
                     <p>To use, drag this link (<a href="/next.php" class="rssnext-link">RSSNext</a>) into your
-                        bookmarks toolbar. Then click the link to visit your next unread item. When you're done, you can click again
-                        to read another item.</p>
+                        bookmarks toolbar. Then click the link to visit your next unread item. When you're done,
+                        you can click again to read another item.</p>
 
                     <p>Mobile apps and browser plugins are coming.</p>
                     <br style="line-height:30px">
                     <h4>Adding Subscriptions</h4>
-                    <p>To add a feed, you must know the feed's rss/atom url. You can often find this by finding a link on the page that
-                        says 'rss', or a feedburner subscribe link, or by examining the page's source code.</p>
+                    <p>To add a feed, you must know the feed's rss/atom url. You can often find this by finding
+                        a link on the page that says 'rss', or a feedburner subscribe link, or by examining the
+                        page's source code.</p>
                     <p>We are developing a search tool that you can use to search for a feed by name.</p>
                     <p>If you have a list of feeds that you would like to import, please contact support@rssnext.net.
 

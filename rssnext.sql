@@ -1,0 +1,75 @@
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+
+
+CREATE TABLE IF NOT EXISTS `facebook_to_user` (
+  `user_id` int(11) NOT NULL,
+  `facebook_id` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+CREATE TABLE IF NOT EXISTS `feed` (
+`feed_id` int(11) NOT NULL,
+  `url` varchar(512) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=latin1;
+
+CREATE TABLE IF NOT EXISTS `item` (
+`item_id` int(11) NOT NULL,
+  `feed_id` int(11) NOT NULL,
+  `guid` varchar(512) NOT NULL,
+  `link` varchar(512) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=latin1;
+
+CREATE TABLE IF NOT EXISTS `user` (
+`user_id` int(11) NOT NULL,
+  `login` varchar(256) DEFAULT NULL,
+  `password` varchar(256) DEFAULT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=228 DEFAULT CHARSET=latin1;
+
+CREATE TABLE IF NOT EXISTS `user_to_feed` (
+  `user_id` int(11) NOT NULL,
+  `feed_id` int(11) NOT NULL,
+  `item_id_last_read` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+ALTER TABLE `facebook_to_user`
+ ADD PRIMARY KEY (`user_id`), ADD UNIQUE KEY `facebook_id` (`facebook_id`);
+
+ALTER TABLE `feed`
+ ADD PRIMARY KEY (`feed_id`), ADD UNIQUE KEY `url` (`url`);
+
+ALTER TABLE `item`
+ ADD PRIMARY KEY (`item_id`), ADD UNIQUE KEY `feed_id` (`feed_id`);
+
+ALTER TABLE `user`
+ ADD PRIMARY KEY (`user_id`);
+
+ALTER TABLE `user_to_feed`
+ ADD PRIMARY KEY (`user_id`,`feed_id`), ADD KEY `feed_id` (`feed_id`);
+
+
+ALTER TABLE `feed`
+MODIFY `feed_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=26;
+ALTER TABLE `item`
+MODIFY `item_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=45;
+ALTER TABLE `user`
+MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=228;
+
+ALTER TABLE `facebook_to_user`
+ADD CONSTRAINT `facebook_to_user_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE;
+
+ALTER TABLE `item`
+ADD CONSTRAINT `item_ibfk_1` FOREIGN KEY (`feed_id`) REFERENCES `feed` (`feed_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+ALTER TABLE `user_to_feed`
+ADD CONSTRAINT `user_to_feed_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+ADD CONSTRAINT `user_to_feed_ibfk_2` FOREIGN KEY (`feed_id`) REFERENCES `feed` (`feed_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

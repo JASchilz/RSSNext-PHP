@@ -1,25 +1,36 @@
 <?php
 
-require_once dirname(__FILE__) . '/../utils/sessions.php';
-require_once dirname(__FILE__) . '/../utils/connection.php';
-require_once dirname(__FILE__).'/../feed/feed.php';
+namespace RSSNext\User;
 
-class DuplicateUsernameException extends Exception {}
-class UsernameOrPasswordInvalidException extends Exception {}
+use RSSNext\Util\Util;
+use RSSNext\Connection\Connection;
+use RSSNext\Feed\Feed;
+use RSSNext\Exception\UsernameOrPasswordInvalidException;
 
+class User
+{
 
-class User {
+    public $uid;
 
-    var $uid;
-
-    function __construct($uid)
+    protected function __construct($uid)
     {
         $this->uid = $uid;
     }
 
-    public static function fromFacebookId($fbid) {
+    public function getUid()
+    {
+        return $this->uid;
+    }
 
-        $con = getConnection();
+    public static function fromSession()
+    {
+        return new self(Util::getUid());
+    }
+
+    public static function fromFacebookId($fbid)
+    {
+
+        $con = Connection::getConnection();
 
         // Check if this facebook_id is already in our database of facebook users
         $query = "SELECT * FROM `facebook_to_user` WHERE `facebook_id`='$fbid'";
@@ -41,9 +52,10 @@ class User {
         return new self($uid);
     }
 
-    public static function create($usernameDirty, $passwordDirty) {
+    public static function create($usernameDirty, $passwordDirty)
+    {
 
-        $con = getConnection();
+        $con = Connection::getConnection();
 
         $username = mysqli_real_escape_string($con, $usernameDirty);
         $hash = password_hash($passwordDirty, PASSWORD_DEFAULT);
@@ -55,9 +67,10 @@ class User {
         return new self(mysqli_insert_id($con));
     }
 
-    public static function validate($usernameDirty, $passwordDirty) {
+    public static function validate($usernameDirty, $passwordDirty)
+    {
 
-        $con = getConnection();
+        $con = Connection::getConnection();
 
         $username = mysqli_real_escape_string($con, $usernameDirty);
 
@@ -78,49 +91,62 @@ class User {
         throw new UsernameOrPasswordInvalidException();
     }
 
-    public function getFeeds() {
+    public function getFeeds()
+    {
 
-        $query = "SELECT `url`, `feed_id` FROM `feed` WHERE `feed_id` IN (SELECT `feed_id` FROM `user_to_feed` WHERE `user_id`='$this->uid');";
+        $query = <<<EOT
+SELECT `url`,
+       `feed_id`
+FROM   `feed`
+WHERE  `feed_id` IN (SELECT `feed_id`
+                     FROM   `user_to_feed`
+                     WHERE  `user_id` = '{$this->uid}')
+EOT;
 
-        $result = mysqli_query(getConnection(), $query);
+        $result = mysqli_query(Connection::getConnection(), $query);
 
         $feeds = [];
-        while($row = mysqli_fetch_array($result)) {
+        while ($row = mysqli_fetch_array($result)) {
             $feeds[] = Feed::fromRow($row);
         }
 
         return $feeds;
     }
 
-    public function removeFeed($feedId) {
+    public function removeFeed($feedId)
+    {
 
-        $con = getConnection();
+        $con = Connection::getConnection();
 
         $query = "DELETE FROM `user_to_feed` WHERE `user_id` = '$this->uid' AND `feed_id` = '$feedId'";
         $con->query($query);
 
         if ($err = $con->error) {
-            return False;
+            return false;
         }
-        return True;
+        return true;
     }
 
-    public function addFeed($feed) {
+    public function addFeed(Feed $feed)
+    {
+        $con = Connection::getConnection();
 
-        $con = getConnection();
+        $last_item_id = $feed->getLastItemId() - 1;
 
-        $last_item_id = $feed->last_item_id - 1;
-        $query = "INSERT INTO `user_to_feed` (`user_id`, `feed_id`, `item_id_last_read`) VALUES ('$this->uid', '$feed->feedId', '$last_item_id')";
+        $query = <<<EOT
+INSERT INTO `user_to_feed`
+            (`user_id`,
+             `feed_id`,
+             `item_id_last_read`)
+VALUES      ('{$this->uid}',
+             '{$feed->getFeedId()}',
+             '{$last_item_id}')
+EOT;
 
         mysqli_query($con, $query);
-
         if ($con->affected_rows == 1) {
-            return $feed->feedId;
+            return $feed->getFeedId();
         }
         return false;
     }
-}
-
-function getCurrentRSSNextUser() {
-    return new User(gedUid());
 }

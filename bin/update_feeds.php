@@ -6,8 +6,9 @@
 // file should be called by the command line php, using an hourly scheduled
 // chron job. In this way, RSSNext seeks out feed updates every hour.
 
-require_once dirname(__FILE__).'/feed.php';
-require_once dirname(__FILE__) . '/../utils/connection.php';
+require_once dirname(__FILE__) . '/../setup.php';
+
+use RSSNext\Connection\Feed;
 
 
 function updateFeeds() {

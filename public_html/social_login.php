@@ -1,18 +1,13 @@
 <?php
 // Handle a successful Facebook javascript login
 
-
-require_once dirname(__FILE__).'/../user/user.php';
-require_once dirname(__FILE__).'/../settings.php';
-
-require_once dirname(__FILE__).'/../vendor/autoload.php';
+require_once dirname(__FILE__) . '/../setup.php';
 
 use Facebook\FacebookSession;
 use Facebook\FacebookRequestException;
 use Facebook\FacebookJavaScriptLoginHelper;
 
-
-FacebookSession::setDefaultApplication($facebook_app_id, $facebook_secret);
+FacebookSession::setDefaultApplication(FACEBOOK_APP_ID, FACEBOOK_SECRET);
 
 session_start();
 
@@ -27,10 +22,6 @@ try {
 }
 
 if ($session) {
-    $_SESSION['uid'] = User::fromFacebookId($session->getUserId())->uid;
+    $_SESSION['uid'] = User::fromFacebookId($session->getUserId())->getUid();
     header('Location: /control_panel.php');
 }
-
-
-
-

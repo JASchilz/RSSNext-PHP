@@ -1,24 +1,27 @@
 <?php
 //Handles all login, create account, change password requests via POST.
 
-require_once dirname(__FILE__) . '/../user/user.php';
+require_once dirname(__FILE__) . '/../setup.php';
+
+use RSSNext\User\User;
+use RSSNext\Exception\UsernameOrPasswordInvalidException;
+use RSSNext\Exception\DuplicateUsernameException;
 
 session_start();
 
 
-if($_SERVER['REQUEST_METHOD'] == 'POST') {
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $action = $_POST['action'];
 
-	$password_dirty = $_POST['password'];
+    $password_dirty = $_POST['password'];
     $username_dirty = $_POST['username'];
     
     switch ($action) {
 
         case "login":
-
             try {
-                $_SESSION['uid'] = User::validate($username_dirty, $password_dirty)->uid;
+                $_SESSION['uid'] = User::validate($username_dirty, $password_dirty)->getUid();
                 header('Location: /control_panel.php');
             } catch (UsernameOrPasswordInvalidException $e) {
                 header('Location: /index.php?msg=failed_login');
@@ -46,7 +49,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                 break;
             }
 
-            $_SESSION['uid']=$user->uid;
+            $_SESSION['uid']=$user->getUid();
             header('Location: /control_panel.php');
 
             break;
@@ -55,7 +58,6 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
             break;
     }
 
-}
-else {
-	echo "Internal error: unexpected http method.";
+} else {
+    echo "Internal error: unexpected http method.";
 }

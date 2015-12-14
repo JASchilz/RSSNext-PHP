@@ -1,7 +1,10 @@
 <?php
 
-require_once 'PHPUnit/Extensions/SeleniumTestCase.php';
-require_once 'utils/connection.php';
+define('SHOW_ERRORS', false);
+
+require_once dirname(__FILE__) . '/../setup.php';
+
+use RSSNext\Connection\Connection;
 
 function randomChars($numChars) {
     return substr(str_shuffle(str_repeat("abcdefghijklmnopqrstuvwxyz", (int)$numChars/10 + 1)), 0, $numChars);
@@ -25,7 +28,7 @@ class WebTest extends PHPUnit_Extensions_Selenium2TestCase
     {
 
         $query = "DELETE FROM `user` WHERE `login`='$this->username'";
-        mysqli_query(getConnection(), $query);
+        mysqli_query(Connection::getConnection(), $query);
     }
 
     protected function createUser() {
@@ -147,4 +150,3 @@ class WebTest extends PHPUnit_Extensions_Selenium2TestCase
     }
 
 }
-?>
