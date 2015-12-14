@@ -21,7 +21,7 @@ function addFeedToList(thisFeed)
 function isValidUrl(url)
 {
     return url.match(/^(ht|f)tps?:\/\/[a-z0-9-\.]+\.[a-z]{2,4}\/?([^\s<>\#%"\,\{\}\\|\\\^\[\]`]+)?$/)
-        || url.indexOf("http://127.0.0.1") === 0;
+        || url.indexOf("http://localhost") === 0;
 }
 
 function handleURLSubmit()
