@@ -22,7 +22,7 @@ $uid = Util::initOrBump();
     <script type="text/javascript" src='//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js'></script>
 
     <!-- Custom Bootstrap -->
-    <link rel="stylesheet" type="text/css" href="includes/css/bootstrap.css" >
+    <link rel="stylesheet" type="text/css" href="includes/css/custom-bootstrap.min.css" >
 
     <!-- Custom CSS -->
     <link rel="stylesheet" type="text/css" href="includes/css/control-panel.css">
