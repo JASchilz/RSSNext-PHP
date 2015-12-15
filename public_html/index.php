@@ -14,6 +14,7 @@ if (Util::initSession()) {
 <html>
 <head>
     <title>RSSNext - One Click Takes You To Your Next Unread Item</title>
+    <link rel="icon" href="includes/media/favicon.ico" type="image/x-icon" />
 
     <!-- JQuery -->
     <script type="text/javascript" src='//code.jquery.com/jquery-2.1.1.min.js'></script>

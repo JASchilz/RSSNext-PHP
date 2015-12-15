@@ -62,7 +62,7 @@ if (!$newItemFound) {
 }
 
 ?>
-<html><head><link rel="shortcut icon" href="/favicon.ico?" />
+<html><head><link rel="shortcut icon" href="includes/media/favicon.ico?" />
     <?php echo $extraHead; ?>
 </head><body>
 
