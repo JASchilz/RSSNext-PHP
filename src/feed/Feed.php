@@ -6,13 +6,27 @@ use RSSNext\Connection\Connection;
 use RSSNext\Exception\NotFoundException;
 use RSSNext\Util\Util;
 
+/**
+ * Class Feed
+ * @package RSSNext\Feed
+ */
 class Feed
 {
 
+    /** @var string */
     protected $url;
+
+    /** @var integer */
     protected $feedId;
+
+    /** @var integer */
     protected $lastItemId;
 
+    /**
+     * @param string  $url
+     * @param integer $feedId
+     * @param integer $lastItemId
+     */
     protected function __construct($url, $feedId, $lastItemId = 0)
     {
         $this->url = $url;
@@ -20,21 +34,37 @@ class Feed
         $this->lastItemId = $lastItemId;
     }
 
+    /**
+     * @return integer
+     */
     public function getFeedId()
     {
         return $this->feedId;
     }
 
+    /**
+     * @return string
+     */
     public function getUrl()
     {
         return $this->url;
     }
 
+    /**
+     * @return integer
+     */
     public function getLastItemId()
     {
         return $this->lastItemId;
     }
 
+    /**
+     * Instantiate a feed from a url.
+     *
+     * @param string $urlDirty
+     * @return boolean|Feed
+     * @throws NotFoundException If no feed is found at the given URL.
+     */
     public static function fromUrl($urlDirty)
     {
         // Provide a feed object, given a url
@@ -105,12 +135,23 @@ EOT;
 
     }
 
+    /**
+     * Instantiate a feed from a database feed row.
+     *
+     * @param array $row
+     * @return Feed
+     */
     public static function fromRow($row)
     {
-        // Provide a feed object, given a database row
         return new self($row['url'], $row['feed_id']);
     }
 
+    /**
+     * Retrieve the contents of the feed at the given url.
+     *
+     * @param string $url
+     * @return mixed
+     */
     protected static function getFeedContents($url)
     {
         $ch = curl_init();
@@ -126,9 +167,13 @@ EOT;
         return $data;
     }
 
+    /**
+     * Query the feed uri, find new feed items, and record them in the database.
+     *
+     * @return void
+     */
     public function update()
     {
-        // Query the feed uri, find new feed items, and record them in the database.
 
         $con = Connection::getConnection();
 
@@ -152,7 +197,6 @@ EOT;
         }
 
         foreach ($xmlFeedContents->entry as $entry) {
-            //$entry = mysql_real_escape_string($entry);
             $items[] = Util::makeList(array_values(self::parseItem($entry, $this->feedId)));
             if (++$i>10) {
                 break;
@@ -179,9 +223,15 @@ EOT;
         $this->lastItemId = $con->insert_id + $con->affected_rows - 1;
     }
 
+    /**
+     * Helper function that takes an xml feed entry item and returns an object
+     *
+     * @param \SimpleXMLElement $entry
+     * @param integer           $feedId
+     * @return array
+     */
     protected static function parseItem($entry, $feedId)
     {
-        // Helper function that takes an xml feed entry item and returns an object
 
         $con = Connection::getConnection();
 

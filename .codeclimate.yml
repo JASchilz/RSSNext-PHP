@@ -4,4 +4,4 @@ languages:
 exclude_paths:
   - "test/*"
   - "bin/*"
-  - "public_html/includes/css/bootstrap.css"
+  - "public_html/includes/css/custom-custom-bootstrap.min.css"

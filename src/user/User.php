@@ -7,26 +7,50 @@ use RSSNext\Connection\Connection;
 use RSSNext\Feed\Feed;
 use RSSNext\Exception\UsernameOrPasswordInvalidException;
 
+/**
+ * Class User encapsulates an account-holding visitor the site
+ * @package RSSNext\User
+ */
 class User
 {
 
+    /** @var string */
     public $uid;
 
+    /**
+     * Instantiate a user from a user-id.
+     *
+     * @param string $uid
+     */
     protected function __construct($uid)
     {
         $this->uid = $uid;
     }
 
+    /**
+     * @return string
+     */
     public function getUid()
     {
         return $this->uid;
     }
 
+    /**
+     * Instantiate a user from the user id in the current session.
+     *
+     * @return User
+     */
     public static function fromSession()
     {
         return new self(Util::getUid());
     }
 
+    /**
+     * Instantiate a user from their facebook system id.
+     *
+     * @param string $fbid The user's facebook system id.
+     * @return User
+     */
     public static function fromFacebookId($fbid)
     {
 
@@ -52,6 +76,13 @@ class User
         return new self($uid);
     }
 
+    /**
+     * Create a new user and insert them into the database.
+     *
+     * @param string $usernameDirty
+     * @param string $passwordDirty
+     * @return User
+     */
     public static function create($usernameDirty, $passwordDirty)
     {
 
@@ -67,6 +98,14 @@ class User
         return new self(mysqli_insert_id($con));
     }
 
+    /**
+     * Instantiate the user with the given username/password.
+     *
+     * @param string $usernameDirty
+     * @param string $passwordDirty
+     * @return User
+     * @throws UsernameOrPasswordInvalidException If the user has provided an invalid username and/or password.
+     */
     public static function validate($usernameDirty, $passwordDirty)
     {
 
@@ -91,6 +130,11 @@ class User
         throw new UsernameOrPasswordInvalidException();
     }
 
+    /**
+     * Instantiate the feeds associated with the user.
+     *
+     * @return Feed[]
+     */
     public function getFeeds()
     {
 
@@ -113,6 +157,12 @@ EOT;
         return $feeds;
     }
 
+    /**
+     * Dissociate a feed from a user.
+     *
+     * @param integer $feedId
+     * @return boolean
+     */
     public function removeFeed($feedId)
     {
 
@@ -127,6 +177,12 @@ EOT;
         return true;
     }
 
+    /**
+     * Associate a feed with a user.
+     *
+     * @param Feed $feed
+     * @return boolean
+     */
     public function addFeed(Feed $feed)
     {
         $con = Connection::getConnection();

@@ -2,19 +2,32 @@
 
 namespace RSSNext\Connection;
 
+/**
+ * Class Connection is a container class for our database connection.
+ *
+ * @package RSSNext\Connection
+ */
 class Connection
 {
 
-    protected static $con = false;
+    /** @var \mysqli */
+    protected static $con = null;
 
+    /**
+     * Disallow class instantiation.
+     */
     protected function __construct()
     {
     }
 
-    public static function openConnection($this_db = false)
+    /**
+     * @param string $this_db
+     * @return \mysqli
+     */
+    public static function openConnection($this_db = "")
     {
 
-        if ($this_db === false) {
+        if ($this_db === "") {
             $this_db = DB_NAME;
         }
 

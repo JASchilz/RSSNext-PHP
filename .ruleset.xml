@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<ruleset name="University of Washington, Department of Enrollment Management Coding Standard (PSR2 Superset)">
+
+    <!-- Include all sniffs in the PSR2 standard. -->
+    <rule ref="PSR2"/>
+
+    <!-- Include some sniffs from the Squiz standard. -->
+    <!--<rule ref="Squiz.Arrays.ArrayDeclaration"/>-->
+    <rule ref="Squiz.PHP.CommentedOutCode"/>
+    <rule ref="Squiz.Commenting.VariableComment"/>
+    <rule ref="Squiz.Arrays"/>
+
+    <rule ref="Squiz.Commenting.ClassComment">
+        <exclude name="Squiz.Commenting.ClassComment.TagNotAllowed"/>
+    </rule>
+
+    <rule ref="Squiz.Commenting.FunctionComment">
+        <exclude name="Squiz.Commenting.FunctionComment.MissingParamComment"/>
+        <exclude name="Squiz.Commenting.FunctionComment.TypeHintMissing"/>
+    </rule>
+</ruleset>
