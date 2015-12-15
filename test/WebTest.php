@@ -15,6 +15,9 @@ class WebTest extends PHPUnit_Extensions_Selenium2TestCase
     
     protected $baseUrl = "http://localhost:8001";
 
+    protected $feed1 = "http://rss.cnn.com/rss/cnn_topstories.rss";
+    protected $feed2 = "http://rss.cnn.com/rss/cnn_us.rss";
+
     protected function setUp()
     {
         $this->setBrowser('firefox');
@@ -82,20 +85,20 @@ class WebTest extends PHPUnit_Extensions_Selenium2TestCase
         $this->assertEquals('RSSNext Home', $this->title());
 
         // Assert that the feed is not yet added
-        $this->assertNotContains( "/includes/xml/sample.rss", $this->byId('your-feeds')->text());
+        $this->assertNotContains( $this->feed1, $this->byId('your-feeds')->text());
 
         $this->byId("url-input")->click();
-        $this->keys("{$this->baseUrl}/includes/xml/sample.rss");
+        $this->keys($this->feed1);
         $this->byCssSelector('#add-feed-form button')->click();
 
-        sleep(1);
+        sleep(3);
 
         // Assert that the feed has been added
-        $this->assertContains( '/includes/xml/sample.rss', $this->byId('your-feeds')->text());
+        $this->assertContains($this->feed1, $this->byId('your-feeds')->text());
 
         // And that it's still there after a refresh
         $this->refresh();
-        $this->assertContains( '/includes/xml/sample.rss', $this->byId('your-feeds')->text());
+        $this->assertContains($this->feed1, $this->byId('your-feeds')->text());
     }
 
     public function testRemoveFeed()
@@ -105,25 +108,25 @@ class WebTest extends PHPUnit_Extensions_Selenium2TestCase
 
         // Add the feed
         $this->byId("url-input")->click();
-        $this->keys("{$this->baseUrl}/includes/xml/sample.rss");
+        $this->keys($this->feed1);
         $this->byCssSelector('#add-feed-form button')->click();
 
-        sleep(1);
+        sleep(3);
 
         // Assert that the feed has been added
-        $this->assertContains( '/includes/xml/sample.rss', $this->byId('your-feeds')->text());
+        $this->assertContains($this->feed1, $this->byId('your-feeds')->text());
 
         // Click the remove button
-        $this->byCssSelector(".remove[data-for-feed-url='{$this->baseUrl}/includes/xml/sample.rss']")->click();
+        $this->byCssSelector(".remove[data-for-feed-url='{$this->feed1}']")->click();
         $this->acceptAlert();
-        sleep(1);
+        sleep(2);
 
         // Assert that the feed has been removed
-        $this->assertNotContains( '/includes/xml/sample.rss', $this->byId('your-feeds')->text());
+        $this->assertNotContains($this->feed1, $this->byId('your-feeds')->text());
 
         // Assert that it is still removed after refresh
         $this->refresh();
-        $this->assertNotContains( '/includes/xml/sample.rss', $this->byId('your-feeds')->text());
+        $this->assertNotContains($this->feed1, $this->byId('your-feeds')->text());
     }
 
     public function testGetFeeds()
@@ -133,20 +136,20 @@ class WebTest extends PHPUnit_Extensions_Selenium2TestCase
 
         // Add the feeds
         $this->byId("url-input")->click();
-        $this->keys("{$this->baseUrl}/includes/xml/sample.rss");
+        $this->keys($this->feed1);
         $this->byCssSelector('#add-feed-form button')->click();
-        sleep(1);
+        sleep(3);
         $this->byId("url-input")->click();
-        $this->keys("{$this->baseUrl}/includes/xml/sample_2.rss");
+        $this->keys($this->feed2);
         $this->byCssSelector('#add-feed-form button')->click();
-        sleep(1);
+        sleep(3);
 
         // Refresh to force a get user feeds
         $this->refresh();
 
         // Assert that the control panel lists the feeds
-        $this->assertContains( '/includes/xml/sample.rss', $this->byId('your-feeds')->text());
-        $this->assertContains( '/includes/xml/sample_2.rss', $this->byId('your-feeds')->text());
+        $this->assertContains($this->feed1, $this->byId('your-feeds')->text());
+        $this->assertContains($this->feed2, $this->byId('your-feeds')->text());
     }
 
 }
