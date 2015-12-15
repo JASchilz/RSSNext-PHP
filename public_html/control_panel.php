@@ -10,8 +10,9 @@ $uid = Util::initOrBump();
 <!DOCTYPE html>
 <html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>RSSNext Home</title>
+    <link rel="icon" href="includes/media/favicon.ico" type="image/x-icon" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
     <!-- JQuery -->
     <script type="text/javascript" src='//code.jquery.com/jquery-2.1.1.min.js'></script>
