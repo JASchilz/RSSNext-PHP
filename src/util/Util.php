@@ -40,9 +40,9 @@ class Util
      *
      * @return null|string
      */
-    public static function getUid()
+    public static function getUserId()
     {
-        return array_key_exists('uid', $_SESSION) ? $_SESSION['uid'] : null;
+        return array_key_exists('userId', $_SESSION) ? $_SESSION['userId'] : null;
     }
 
     /**
@@ -56,7 +56,7 @@ class Util
         session_set_cookie_params($lifetime);
         session_start();
 
-        return static::getUid();
+        return static::getUserId();
     }
 
     /**
@@ -67,13 +67,13 @@ class Util
     public static function initOrBump()
     {
 
-        $uid = static::initSession();
+        $userId = static::initSession();
 
-        if (!$uid) {
+        if (!$userId) {
             header("Location: /index.php?msg=expired_login");
             return false;
         } else {
-            return $uid;
+            return $userId;
         }
 
     }

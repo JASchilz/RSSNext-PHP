@@ -4,7 +4,7 @@ require_once dirname(__FILE__) . '/../setup.php';
 
 use RSSNext\Util\Util;
 
-$uid = Util::initOrBump();
+$userId = Util::initOrBump();
 
 ?>
 <!DOCTYPE html>

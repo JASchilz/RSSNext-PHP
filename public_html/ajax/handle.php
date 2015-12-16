@@ -7,7 +7,7 @@ use RSSNext\Util\Util;
 use RSSNext\User\User;
 use RSSNext\Feed\Feed;
 
-$uid = Util::initOrBump();
+$userId = Util::initOrBump();
 
 $currentUser = User::fromSession();
 

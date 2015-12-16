@@ -5,7 +5,7 @@ require_once dirname(__FILE__) . '/../setup.php';
 use RSSNext\Util\Util;
 use RSSNext\Connection\Connection;
 
-$uid = Util::initOrBump();
+$userId = Util::initOrBump();
 
 
 // Find the next unread item for this user in the database
@@ -15,12 +15,12 @@ SELECT Min(item_id),
        item.feed_id
 FROM   (SELECT *
         FROM   user_to_feed
-        WHERE  user_id = '$uid') AS user_to_feed
+        WHERE  user_id = '$userId') AS user_to_feed
        LEFT JOIN (SELECT *
                   FROM   item
                   WHERE  item.feed_id IN (SELECT feed_id
                                           FROM   user_to_feed
-                                          WHERE  user_id = '$uid')) AS item
+                                          WHERE  user_id = '$userId')) AS item
               ON user_to_feed.feed_id = item.feed_id
 WHERE  item.item_id > user_to_feed.item_id_last_read
 EOT;
@@ -41,7 +41,7 @@ if ($result->num_rows == 1) {
         $query = <<<EOT
 UPDATE user_to_feed
 SET    item_id_last_read='{$row['min(item_id)']}'
-WHERE  user_id='$uid'
+WHERE  user_id='$userId'
 AND    feed_id='{$row['feed_id']}'
 EOT;
 
