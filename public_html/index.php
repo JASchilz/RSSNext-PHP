@@ -31,6 +31,9 @@ if (Util::initSession()) {
     <link href='includes/css/login.css' rel="stylesheet">
 
     <!-- Custom js -->
+    <script type="application/x-javascript">
+        var rssnext = {};
+    </script>
     <script type="application/x-javascript" src="includes/js/social_login.js"></script>
 
 </head>

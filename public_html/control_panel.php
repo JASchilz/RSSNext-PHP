@@ -28,12 +28,14 @@ $uid = Util::initOrBump();
     <link rel="stylesheet" type="text/css" href="includes/css/control-panel.css">
 
     <!-- Custom js -->
-    <script type="application/x-javascript" src="includes/js/control_panel_init.js"></script>
+    <script type="application/x-javascript">
+        var rssnext = {};
+    </script>
     <script type="application/x-javascript" src="includes/js/actions.js"></script>
     <script type="application/x-javascript" src="includes/js/ajax.js"></script>
     <script type="application/x-javascript" src="includes/js/utils.js"></script>
     <script type="application/x-javascript">
-        window.onload = controlPanelInit;
+        window.onload = rssnext.actions.getFeeds;
     </script>
 </head>
 
@@ -77,7 +79,9 @@ $uid = Util::initOrBump();
 
             <form id="add-feed-form" class="form-inline" role="form">
                 <input id="url-input" type="text" class="form-control" placeholder="Feed URL">
-                <button class="btn btn-default" onclick="handleURLSubmit();return false;">Add Subscription</button>
+                <button class="btn btn-default" onclick="rssnext.utils.handleURLSubmit();return false;">
+                    Add Subscription
+                </button>
             </form>
 
             <div class="panel panel-default">
