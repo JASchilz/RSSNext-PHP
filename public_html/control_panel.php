@@ -79,7 +79,9 @@ $uid = Util::initOrBump();
 
             <form id="add-feed-form" class="form-inline" role="form">
                 <input id="url-input" type="text" class="form-control" placeholder="Feed URL">
-                <button class="btn btn-default" onclick="rssnext.utils.handleURLSubmit();return false;">Add Subscription</button>
+                <button class="btn btn-default" onclick="rssnext.utils.handleURLSubmit();return false;">
+                    Add Subscription
+                </button>
             </form>
 
             <div class="panel panel-default">
