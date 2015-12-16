@@ -1,49 +1,47 @@
-function addFeedToList(thisFeed)
-{
+rssnext.utils = (function() {
 
-    var containerTr = $("<tr id=feedContainer" + thisFeed["id"] + "></tr>");
+    var addFeedToList = function (thisFeed) {
+        var containerTr = $("<tr id=feedContainer" + thisFeed["id"] + "></tr>");
 
-    var infoTd = $("<td>" + thisFeed["url"] + "</td>");
-    var removeDiv = $("<div class='remove'></div>");
-    removeDiv.click(function () {
-        removeFeedFromUser(thisFeed);});
-    removeDiv.attr("data-for-feed-url", thisFeed["url"]);
+        var infoTd = $("<td>" + thisFeed["url"] + "</td>");
+        var removeDiv = $("<div class='remove'></div>");
+        removeDiv.click(function () {
+            rssnext.actions.removeFeedFromUser(thisFeed);
+        });
+        removeDiv.attr("data-for-feed-url", thisFeed["url"]);
 
-    var actionTd = $("<td></td>");
+        var actionTd = $("<td></td>");
 
-    actionTd.append(removeDiv);
-    containerTr.append(infoTd);
-    containerTr.append(actionTd);
+        actionTd.append(removeDiv);
+        containerTr.append(infoTd);
+        containerTr.append(actionTd);
 
-    $("#your-feeds").append(containerTr);
-}
+        $("#your-feeds").append(containerTr);
+    };
 
-function isValidUrl(url)
-{
-    return url.match(/^(ht|f)tps?:\/\/[a-z0-9-\.]+\.[a-z]{2,4}\/?([^\s<>\#%"\,\{\}\\|\\\^\[\]`]+)?$/)
-        || url.indexOf("http://localhost") === 0;
-}
+    var isValidUrl = function (url) {
+        return url.match(/^(ht|f)tps?:\/\/[a-z0-9-\.]+\.[a-z]{2,4}\/?([^\s<>\#%"\,\{\}\\|\\\^\[\]`]+)?$/)
+            || url.indexOf("http://localhost") === 0;
+    };
 
-function handleURLSubmit()
-{
+    var handleURLSubmit = function () {
 
-    var url = document.getElementById('url-input').value;
+        var url = document.getElementById('url-input').value;
 
-    url = url.replace(/^\s+|\s+$/g,"");
+        url = url.replace(/^\s+|\s+$/g, "");
 
-    if (isValidUrl(url) || ((url = "http://" + url) && isValidUrl(url))) {
-        addFeedToUser({url:url,});
-    } else {
-        alert("Bad URL " + url);
+        if (isValidUrl(url) || ((url = "http://" + url) && isValidUrl(url))) {
+            rssnext.actions.addFeedToUser({url: url,});
+        } else {
+            alert("Bad URL " + url);
+        }
+
+    };
+
+    return {
+        addFeedToList: addFeedToList,
+        isValidUrl: isValidUrl,
+        handleURLSubmit: handleURLSubmit
     }
 
-}
-
-function wrapXMLWithContext(xml, context)
-{
-
-    xml = '<comm><request context="' + context +'">' + xml;
-    xml += '</request></comm>';
-
-    return xml;
-}
+}());
