@@ -15,7 +15,7 @@ class User
 {
 
     /** @var string */
-    public $uid;
+    public $userId;
 
     /**
      * Instantiate a user from a user-id.
@@ -24,15 +24,15 @@ class User
      */
     protected function __construct($uid)
     {
-        $this->uid = $uid;
+        $this->userId = $uid;
     }
 
     /**
      * @return string
      */
-    public function getUid()
+    public function getUserId()
     {
-        return $this->uid;
+        return $this->userId;
     }
 
     /**
@@ -42,22 +42,22 @@ class User
      */
     public static function fromSession()
     {
-        return new self(Util::getUid());
+        return new self(Util::getUserId());
     }
 
     /**
      * Instantiate a user from their facebook system id.
      *
-     * @param string $fbid The user's facebook system id.
+     * @param string $facebookId The user's facebook system id.
      * @return User
      */
-    public static function fromFacebookId($fbid)
+    public static function fromFacebookId($facebookId)
     {
 
         $con = Connection::getConnection();
 
         // Check if this facebook_id is already in our database of facebook users
-        $query = "SELECT * FROM `facebook_to_user` WHERE `facebook_id`='$fbid'";
+        $query = "SELECT * FROM `facebook_to_user` WHERE `facebook_id`='$facebookId'";
         $result = mysqli_query($con, $query);
 
         // If it is, return the associated rssnext user
@@ -70,7 +70,7 @@ class User
         mysqli_query($con, $query);
         $uid = mysqli_insert_id($con);
 
-        $query = "INSERT INTO `facebook_to_user` (`user_id`, `facebook_id`) VALUES ('$uid', '$fbid')";
+        $query = "INSERT INTO `facebook_to_user` (`user_id`, `facebook_id`) VALUES ('$uid', '$facebookId')";
         mysqli_query($con, $query);
 
         return new self($uid);
@@ -144,7 +144,7 @@ SELECT `url`,
 FROM   `feed`
 WHERE  `feed_id` IN (SELECT `feed_id`
                      FROM   `user_to_feed`
-                     WHERE  `user_id` = '{$this->uid}')
+                     WHERE  `user_id` = '{$this->userId}')
 EOT;
 
         $result = mysqli_query(Connection::getConnection(), $query);
@@ -168,7 +168,7 @@ EOT;
 
         $con = Connection::getConnection();
 
-        $query = "DELETE FROM `user_to_feed` WHERE `user_id` = '$this->uid' AND `feed_id` = '$feedId'";
+        $query = "DELETE FROM `user_to_feed` WHERE `user_id` = '$this->userId' AND `feed_id` = '$feedId'";
         $con->query($query);
 
         if ($err = $con->error) {
@@ -187,16 +187,16 @@ EOT;
     {
         $con = Connection::getConnection();
 
-        $last_item_id = $feed->getLastItemId() - 1;
+        $lastItemId = $feed->getLastItemId() - 1;
 
         $query = <<<EOT
 INSERT INTO `user_to_feed`
             (`user_id`,
              `feed_id`,
              `item_id_last_read`)
-VALUES      ('{$this->uid}',
+VALUES      ('{$this->userId}',
              '{$feed->getFeedId()}',
-             '{$last_item_id}')
+             '{$lastItemId}')
 EOT;
 
         mysqli_query($con, $query);

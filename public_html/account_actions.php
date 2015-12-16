@@ -14,14 +14,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $action = $_POST['action'];
 
-    $password_dirty = $_POST['password'];
-    $username_dirty = $_POST['username'];
+    $passwordDirty = $_POST['password'];
+    $usernameDirty = $_POST['username'];
     
     switch ($action) {
 
         case "login":
             try {
-                $_SESSION['uid'] = User::validate($username_dirty, $password_dirty)->getUid();
+                $_SESSION['userId'] = User::validate($usernameDirty, $passwordDirty)->getUserId();
                 header('Location: /control_panel.php');
             } catch (UsernameOrPasswordInvalidException $e) {
                 header('Location: /index.php?msg=failed_login');
@@ -30,26 +30,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             break;
 
         case "create_account":
-            $password_confirm_dirty = $_POST['password_confirm'];
+            $passwordConfirmDirty = $_POST['password_confirm'];
 
             if (!filter_var($_POST['username'], FILTER_VALIDATE_EMAIL)) {
                 header('Location: /index.php?msg=invalid_email');
                 break;
             }
             
-            if ($password_dirty != $password_confirm_dirty) {
+            if ($passwordDirty != $passwordConfirmDirty) {
                 header('Location: /index.php?msg=passwords_dont_match');
                 break;
             }
 
             try {
-                $user = User::create($username_dirty, $password_dirty);
+                $user = User::create($usernameDirty, $passwordDirty);
             } catch (DuplicateUsernameException $e) {
                 header("Location: /index.php?msg=duplicate_username");
                 break;
             }
 
-            $_SESSION['uid']=$user->getUid();
+            $_SESSION['userId']=$user->getUserId();
             header('Location: /control_panel.php');
 
             break;

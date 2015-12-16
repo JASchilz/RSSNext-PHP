@@ -22,6 +22,6 @@ try {
 }
 
 if ($session) {
-    $_SESSION['uid'] = User::fromFacebookId($session->getUserId())->getUid();
+    $_SESSION['userId'] = User::fromFacebookId($session->getUserId())->getUid();
     header('Location: /control_panel.php');
 }
