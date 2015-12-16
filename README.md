@@ -32,11 +32,15 @@ A comprehensive set of user acceptance tests allows the programmer to aggressive
 
 ### Code Style Tests
 
-Code style tests on every push encourage high, uniform quality on each merge into production. This project is held to the PSR2 by PHPCodeSniffer.
+Code style tests on every push encourage high, uniform quality on each merge into production. This project is held to the [PSR2](http://www.php-fig.org/psr/psr-2/) standard by PHPCodeSniffer.
 
 ### Continuous Integration
 
 Travis-CI provides this project with comprehensive tests on each push, allowing continuous merges into the production branch. This means that features can be rapidly added to the code base.
+
+### Continuous Deployment
+
+Every merge to master undergoes a comphrehensive set of user-acceptance tests, so every merge to master is safe to immediately deploy to production. This repository uses a GitHub webhook to alert the server at `php.rssnext.net` when a successful merge has been made, and the server responds by immediately downloading and deploying the updated code.
 
 
 Things I Would Do Differently
