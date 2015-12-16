@@ -1,8 +1,8 @@
-rssnext.ajax = (function() {
+rssnext.ajax = (function () {
 
     var url = '/ajax/handle.php';
 
-    var sendAjax = function(xml, handler) {
+    var sendAjax = function (xml, handler) {
         var ajaxRequest = new XMLHttpRequest();
         ajaxRequest.overrideMimeType('text/xml');
         ajaxRequest.open("POST", url, true);
@@ -19,7 +19,7 @@ rssnext.ajax = (function() {
     };
 
 
-    var checkErrors = function(ready, status, msg) {
+    var checkErrors = function (ready, status, msg) {
         var fail = 0;
         if (ready == 4 && msg == null) {
             fail = 1;

@@ -1,4 +1,4 @@
-rssnext.social_login = (function() {
+rssnext.social_login = (function () {
 
     // Initialize facebook
     window.fbAsyncInit = function () {
@@ -23,7 +23,7 @@ rssnext.social_login = (function() {
         fjs.parentNode.insertBefore(js, fjs);
     }(document, 'script', 'facebook-jssdk'));
 
-    var statusChangeCallback = function(response) {
+    var statusChangeCallback = function (response) {
         console.log('statusChangeCallback');
         if (response.status === 'connected') {
             // Logged into your app and Facebook.
@@ -31,7 +31,7 @@ rssnext.social_login = (function() {
         }
     };
 
-    var checkLoginState = function() {
+    var checkLoginState = function () {
         FB.getLoginStatus(function (response) {
             statusChangeCallback(response);
         });

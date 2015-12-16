@@ -1,4 +1,4 @@
-rssnext.actions = (function(){
+rssnext.actions = (function () {
 
     var wrapXMLWithContext = function (xml, context) {
 
@@ -8,8 +8,8 @@ rssnext.actions = (function(){
         return xml;
     };
 
-    var getFeeds = function()
-    {
+    var getFeeds = function () {
+    
         var xml = wrapXMLWithContext("", "get user feeds");
 
         var handler = function (response) {
@@ -27,8 +27,8 @@ rssnext.actions = (function(){
         rssnext.ajax.sendAjax(xml, handler);
     };
 
-    var removeFeedFromUser = function(thisFeed)
-    {
+    var removeFeedFromUser = function (thisFeed) {
+    
 
         if (confirm("Remove " + thisFeed["url"] + " from your feeds?")) {
 
@@ -52,8 +52,8 @@ rssnext.actions = (function(){
 
     };
 
-    var addFeedToUser = function(thisFeed)
-    {
+    var addFeedToUser = function (thisFeed) {
+    
 
         var xml = '<feed>' + thisFeed["url"] + '</feed>';
         xml = wrapXMLWithContext(xml, "add feed to user");

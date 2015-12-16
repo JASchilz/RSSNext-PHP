@@ -1,4 +1,4 @@
-rssnext.utils = (function() {
+rssnext.utils = (function () {
 
     var addFeedToList = function (thisFeed) {
         var containerTr = $("<tr id=feedContainer" + thisFeed["id"] + "></tr>");
