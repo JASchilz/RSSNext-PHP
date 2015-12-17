@@ -1,6 +1,5 @@
 local_settings.php
 
-composer.lock
 composer.phar
 composer.phar/
 vendor/
