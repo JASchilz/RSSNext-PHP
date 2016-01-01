@@ -15,9 +15,9 @@ Features
 
 See [public_html/index.php](public_html/index.php) for examples of hand coded, attractive user-interfaces in simple HTML and CSS. Responsive styling is provided by the Bootstrap framework.
 
-### Javascript, JQuery, and AJAX
+### JavaScript, JQuery, and AJAX
 
-The user control panel is populated by asynchronous javascript calls to the project's AJAX handler.
+The user control panel is populated by asynchronous JavaScript calls to the project's AJAX handler.
 
 ### Modern PHP
 
