@@ -205,4 +205,49 @@ EOT;
         }
         return false;
     }
+
+    /**
+     * Get the next unread link for this user, and mark it as read.
+     *
+     * @return string
+     */
+    public function nextLink()
+    {
+        $query = <<<EOT
+SELECT Min(item_id),
+       link,
+       item.feed_id
+FROM   (SELECT *
+        FROM   user_to_feed
+        WHERE  user_id = '{$this->getUserId()}') AS user_to_feed
+       LEFT JOIN (SELECT *
+                  FROM   item
+                  WHERE  item.feed_id IN (SELECT feed_id
+                                          FROM   user_to_feed
+                                          WHERE  user_id = '{$this->getUserId()}')) AS item
+              ON user_to_feed.feed_id = item.feed_id
+WHERE  item.item_id > user_to_feed.item_id_last_read
+EOT;
+
+        $result = mysqli_query(Connection::getConnection(), $query);
+
+        $link = "";
+        if ($result->num_rows == 1) {
+            $row = mysqli_fetch_array($result);
+
+            if ($row['MIN(item_id)']) {
+
+                $link = $row['link'];
+
+                $query = <<<EOT
+UPDATE user_to_feed
+SET    item_id_last_read='{$row['min(item_id)']}'
+WHERE  user_id='{$this->getUserId()}'
+AND    feed_id='{$row['feed_id']}'
+EOT;
+
+            }
+        }
+        return $link;
+    }
 }
