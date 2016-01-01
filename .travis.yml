@@ -10,7 +10,7 @@ before_install:
   - mysql -uroot rssnext < rssnext.sql
 before_script:
   - sed -i '/phpdoc/d' composer.json
-  - printf "<?php\ndefine('DB_USERNAME', 'root');\ndefine('DB_PASSWORD','');\n" > local_settings.php
+  - printf "<?php\ndefine('DB_USERNAME', 'root');\ndefine('DB_PASSWORD','');\n" > secret_settings.php
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
   - sleep 3
