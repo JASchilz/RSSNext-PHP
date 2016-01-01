@@ -83,7 +83,7 @@ class User
      * @param string $usernameDirty
      * @param string $passwordDirty
      * @return User
-     * @throws DuplicateUsernameException if a user already exists with this username
+     * @throws DuplicateUsernameException If a user already exists with this username.
      */
     public static function create($usernameDirty, $passwordDirty)
     {
