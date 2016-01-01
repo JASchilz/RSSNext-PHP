@@ -7,11 +7,15 @@ use Facebook\FacebookSession;
 use Facebook\FacebookRequestException;
 use Facebook\FacebookJavaScriptLoginHelper;
 
+use RSSNext\User\User;
+
 FacebookSession::setDefaultApplication(FACEBOOK_APP_ID, FACEBOOK_SECRET);
 
 session_start();
 
 $helper = new FacebookJavaScriptLoginHelper();
+
+$session = null;
 try {
     $session = $helper->getSession();
 } catch (FacebookRequestException $ex) {
@@ -22,6 +26,6 @@ try {
 }
 
 if ($session) {
-    $_SESSION['userId'] = User::fromFacebookId($session->getUserId())->getUid();
+    $_SESSION['userId'] = User::fromFacebookId($session->getUserId())->getUserId();
     header('Location: /control_panel.php');
 }
