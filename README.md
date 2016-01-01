@@ -4,14 +4,14 @@
 RSSNext-PHP
 ===========
 
-RSSNext is a very simple RSS reader: add feeds, then click a button to be taken to your next unread item. I've written this to demonstrate the flavor of my work in HTML, CSS, AJAX, PHP, MySQL and social login over OAuth 2.0.
+RSSNext is a very simple RSS reader: add feeds, then click a button to be taken to your next unread item. I've written this to demonstrate the flavor of my work in HTML, CSS, AJAX, PHP, MySQL and social login with OAuth 2.0.
 
 See it in action at [http://php.rssnext.net](http://php.rssnext.net). Try creating an account, adding a feed (eg: http://feeds.bbci.co.uk/news/rss.xml), and using the 'Next' link.
 
 Features
 --------
 
-### Responsive Design
+### Responsive HTML
 
 See [public_html/index.php](public_html/index.php) for examples of hand coded, attractive user-interfaces in simple HTML and CSS. Responsive styling is provided by the Bootstrap framework.
 
