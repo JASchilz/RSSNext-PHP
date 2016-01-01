@@ -2,6 +2,7 @@
 
 namespace RSSNext\User;
 
+use RSSNext\Exception\DuplicateUsernameException;
 use RSSNext\Util\Util;
 use RSSNext\Connection\Connection;
 use RSSNext\Feed\Feed;
@@ -82,6 +83,7 @@ class User
      * @param string $usernameDirty
      * @param string $passwordDirty
      * @return User
+     * @throws DuplicateUsernameException If a user already exists with this username.
      */
     public static function create($usernameDirty, $passwordDirty)
     {
@@ -91,6 +93,15 @@ class User
         $username = mysqli_real_escape_string($con, $usernameDirty);
         $hash = password_hash($passwordDirty, PASSWORD_DEFAULT);
 
+        // Check if the user already exists.
+        $query = "SELECT * FROM `user` WHERE `login`='$username'";
+        $result = mysqli_query($con, $query);
+
+        if ($result->num_rows > 0) {
+            throw new DuplicateUsernameException;
+        }
+
+        // If the user doesn't exist, then create them.
         $query = "INSERT INTO `user` (`login`, `password`) VALUES ('$username', '$hash')";
 
         mysqli_query($con, $query);
