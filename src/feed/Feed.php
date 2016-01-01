@@ -266,7 +266,7 @@ EOT;
         $result = mysqli_query($con, $query);
 
         $feeds = [];
-        while($row = mysqli_fetch_array($result)) {
+        while ($row = mysqli_fetch_array($result)) {
             $feeds[] = Feed::fromRow($row);
         }
 
