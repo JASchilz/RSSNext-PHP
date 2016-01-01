@@ -174,14 +174,12 @@ EOT;
      */
     public function update()
     {
-
         $con = Connection::getConnection();
 
         $feedContents = $this->getFeedContents($this->url);
         $xmlFeedContents = new \SimpleXmlElement($feedContents);
 
-        $items = array();
-
+        $items = [];
         if (property_exists($xmlFeedContents, 'channel')) {
             $xmlFeedContents = $xmlFeedContents->channel;
         }
@@ -189,7 +187,7 @@ EOT;
         // We'll record as many as ten items; $i is our counter
         $i = 0;
         foreach ($xmlFeedContents->item as $entry) {
-            $items[] = UtiL::makeList(array_values(self::parseItem($entry, $this->feedId)));
+            $items[] = Util::makeList(array_values(self::parseItem($entry, $this->feedId)));
 
             if (++$i>10) {
                 break;
@@ -215,9 +213,9 @@ INSERT INTO `item`
                         `guid`
             )
             VALUES $items
-ON duplicate KEYUPDATE item_id=last_insert_id(item_id)
+ON duplicate KEY UPDATE item_id=last_insert_id(item_id)
 EOT;
-
+        echo $query;
         mysqli_query($con, $query);
 
         $this->lastItemId = $con->insert_id + $con->affected_rows - 1;
@@ -253,6 +251,25 @@ EOT;
         $item['guid'] = "'" . $item['guid'] . "'";
 
         return $item;
+    }
 
+    /**
+     * Get all feeds from the database
+     *
+     * @return Feed[]
+     */
+    public static function getFeeds()
+    {
+        $con = Connection::getConnection();
+        $query = "SELECT `url`, `feed_id` FROM `feed`";
+
+        $result = mysqli_query($con, $query);
+
+        $feeds = [];
+        while($row = mysqli_fetch_array($result)) {
+            $feeds[] = Feed::fromRow($row);
+        }
+
+        return $feeds;
     }
 }
