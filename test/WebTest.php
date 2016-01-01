@@ -79,6 +79,22 @@ class WebTest extends PHPUnit_Extensions_Selenium2TestCase
 
     }
 
+    public function testCreateTwoUsersWithSameUsername()
+    {
+        $this->createUser();
+        $this->assertEquals('RSSNext Home', $this->title());
+
+        // Logout
+        $this->byId("account-dropdown")->click();
+        $this->byId("logout")->click();
+        sleep(2);
+        $this->assertEquals('RSSNext - One Click Takes You To Your Next Unread Item', $this->title());
+
+        // Create user with same username
+        $this->createUser();
+        $this->assertContains('duplicate_username', $this->url());
+    }
+
     public function testAddFeed()
     {
         $this->createUser();
