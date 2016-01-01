@@ -54,7 +54,7 @@ if (Util::initSession()) {
                     <div class="row">
                         <div class="col-xs-7 col-sm-7 col-md-7 center-block">
                             <a class="btn btn-block btn-social btn-facebook"
-                               onClick="FB.login(function(response) {checkLoginState();});">
+                               onClick="FB.login(function(response) {rssnext.social_login.checkLoginState();});">
                                 <i class="fa fa-facebook"></i>Sign up with Facebook
                             </a>
                         </div>
@@ -107,7 +107,7 @@ if (Util::initSession()) {
                     <div class="row">
                         <div class="col-xs-7 col-sm-7 col-md-7 center-block">
                             <a class="btn btn-block btn-social btn-facebook"
-                               onClick="FB.login(function(response) {checkLoginState();});">
+                               onClick="FB.login(function(response) {rssnext.social_login.checkLoginState();});">
                                 <i class="fa fa-facebook"></i>Log in with Facebook
                             </a>
                         </div>
