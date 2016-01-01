@@ -17,13 +17,18 @@ if ($link) {
                      Any delay here is due to your feed publisher's server.</p>
                      <p>You may also try clicking directly on this <a href='$link'>link</a>.</p>";
 } else {
+    $extraHead = "";
     $bodyContent = "<p>You have no more items to read. Feeds are updated about once an hour.</p>";
 }
 
 ?>
-<html><head><link rel="shortcut icon" href="includes/media/favicon.ico?" />
-    <?php echo $extraHead; ?>
-</head><body>
+<html>
+    <head>
+        <link rel="shortcut icon" href="includes/media/favicon.ico?" />
+        <?php echo $extraHead; ?>
+    </head>
+    <body>
 
-<?php echo $bodyContent; ?>
-</body></html>
+    <?php echo $bodyContent; ?>
+    </body>
+</html>
