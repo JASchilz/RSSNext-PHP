@@ -8,8 +8,6 @@ RSSNext is a very simple RSS reader: add feeds, then click a button to be taken 
 
 See it in action at [http://php.rssnext.net](http://php.rssnext.net). Try creating an account, adding a feed (eg: http://feeds.bbci.co.uk/news/rss.xml), and using the 'Next' link.
 
-See also the discussion of features below.
-
 Features
 --------
 
@@ -29,6 +27,10 @@ RSSNext uses several modern features of PHP development, including:
   * Namespacing to avoid name collisions and improve readability
   * Oject-oriented design to encapsulate database calls and provide an effective type system
   * PHPDoc type hinting for code completion in the IDE
+
+### Social Login
+
+Visitors can either create an RSSNext account, or authenticate with two clicks using Facebook.
 
 ### User Acceptance Testing
 
@@ -57,7 +59,7 @@ See the [issue tracker](https://github.com/UWEnrollmentManagement/Framework/issu
 Installation
 ------------
 
-Clone RSSNext-php onto your server:
+Clone RSSNext-PHP onto your server:
 
     $ git clone https://github.com/JASchilz/rssnext-php.git
     
