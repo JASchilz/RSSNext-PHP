@@ -1,4 +1,4 @@
-local_settings.php
+secret_settings.php
 
 composer.lock
 composer.phar
