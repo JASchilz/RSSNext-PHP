@@ -215,7 +215,7 @@ INSERT INTO `item`
             VALUES $items
 ON duplicate KEY UPDATE item_id=last_insert_id(item_id)
 EOT;
-        echo $query;
+
         mysqli_query($con, $query);
 
         $this->lastItemId = $con->insert_id + $con->affected_rows - 1;

@@ -214,7 +214,7 @@ EOT;
     public function nextLink()
     {
         $query = <<<EOT
-SELECT Min(item_id),
+SELECT MIN(item_id),
        link,
        item.feed_id
 FROM   (SELECT *
@@ -241,10 +241,11 @@ EOT;
 
                 $query = <<<EOT
 UPDATE user_to_feed
-SET    item_id_last_read='{$row['min(item_id)']}'
+SET    item_id_last_read='{$row['MIN(item_id)']}'
 WHERE  user_id='{$this->getUserId()}'
 AND    feed_id='{$row['feed_id']}'
 EOT;
+                $result = mysqli_query(Connection::getConnection(), $query);
 
             }
         }
