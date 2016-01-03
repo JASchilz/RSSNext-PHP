@@ -85,7 +85,10 @@ class Util
      */
     public static function getAlertMessage()
     {
-        $alertMessage = ["hidden", ""];
+        $alertMessage = [
+                         "hidden",
+                         "",
+                        ];
 
         if (array_key_exists("msg", $_GET) && array_key_exists($_GET["msg"], ALERT_MESSAGES)) {
             $alertMessages = ALERT_MESSAGES;
