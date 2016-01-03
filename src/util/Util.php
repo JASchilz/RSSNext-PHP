@@ -77,4 +77,21 @@ class Util
         }
 
     }
+
+    /**
+     * Returns the current [alert message class, alert message content].
+     *
+     * @return string[]
+     */
+    public static function getAlertMessage()
+    {
+        $alertMessage = ["hidden", ""];
+
+        if (array_key_exists("msg", $_GET) && array_key_exists($_GET["msg"], ALERT_MESSAGES)) {
+            $alertMessages = ALERT_MESSAGES;
+            $alertMessage = $alertMessages[$_GET["msg"]];
+        }
+
+        return $alertMessage;
+    }
 }
