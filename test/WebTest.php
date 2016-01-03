@@ -29,7 +29,6 @@ class WebTest extends PHPUnit_Extensions_Selenium2TestCase
 
     protected function tearDown()
     {
-
         $query = "DELETE FROM `user` WHERE `login`='$this->username'";
         mysqli_query(Connection::getConnection(), $query);
     }
@@ -54,6 +53,26 @@ class WebTest extends PHPUnit_Extensions_Selenium2TestCase
     {
         $this->url($this->baseUrl);
         $this->assertEquals('RSSNext - One Click Takes You To Your Next Unread Item', $this->title());
+    }
+
+    public function testAccountCreationPasswordMismatch()
+    {
+        $this->url($this->baseUrl);
+        $this->assertEquals('RSSNext - One Click Takes You To Your Next Unread Item', $this->title());
+
+        $this->byCssSelector('#signup-form #id_username')->click();
+        $this->keys($this->username);
+
+        $this->byCssSelector('#signup-form #id_password')->click();
+        $this->keys($this->password);
+
+        $this->byCssSelector('#signup-form #id_password_confirm')->click();
+        $this->keys((string)rand());
+
+        $this->byCssSelector('#signup-form button[type="submit"]')->click();
+
+        $this->assertEquals('RSSNext - One Click Takes You To Your Next Unread Item', $this->title());
+        $this->assertContains('passwords_dont_match', $this->url());
     }
 
     public function testAccountCreationAndLogoutAndLogin()
