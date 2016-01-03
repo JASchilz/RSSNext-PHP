@@ -15,5 +15,6 @@ define('ALERT_MESSAGE_CONTENT', 1);
 const ALERT_MESSAGES = [
     "failed_login" => ["alert-danger", "Your username or password was incorrect."],
     "duplicate_username" => ["alert-danger", "There is already a user with that email."],
+    "passwords_dont_match" => ["alert-danger", "The two passwords you entered don't match."],
     "logged_out" => ["alert-success", "You have successfully logged out."],
 ];
