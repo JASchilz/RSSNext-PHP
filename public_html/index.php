@@ -40,113 +40,96 @@ if (Util::initSession()) {
 
 <div class="container">
 
-        <div class="page-header">
-            <h1>RSSNext
-                <small id="header-small">&nbsp;A single click takes you to your next unread item.</small>
-            </h1>
-        </div>
-        <div class="row">
-
-            <div class="col-xs-12 col-sm-12 col-md-6 pull-right">
-                <div class="main well opaque">
-
-                    <h3>Sign Up</h3>
-                    <div class="row">
-                        <div class="col-xs-7 col-sm-7 col-md-7 center-block">
-                            <a class="btn btn-block btn-social btn-facebook"
-                               onClick="FB.login(function(response) {rssnext.social_login.checkLoginState();});">
-                                <i class="fa fa-facebook"></i>Sign up with Facebook
-                            </a>
-                        </div>
-                    </div>
-                    <div class="login-or">
-                        <span class="span-or">or</span>
-                    </div>
-
-                    <form id="signup-form" class="login" method="POST" action="account_actions.php">
-                        <input type="hidden" name="action" value="create_account">
-
-                        <div class="form-group">
-
-                            <label for="id_username">E-mail</label>
-                            <input type="username" class="form-control" id="id_username"
-                                   name="username">
-
-                        </div>
-
-                        <div class="form-group">
-
-                            <label for="id_password">Password</label>
-                            <input type="password" class="form-control" id="id_password"
-                                   name="password">
-
-                        </div>
-
-                        <div class="form-group">
-
-                            <label for="id_password_confirm">Password (again)</label>
-                            <input type="password" class="form-control" id="id_password_confirm"
-                                   name="password_confirm">
-
-                        </div>
-
-                        <button type="submit" class="btn btn btn-primary">
-                            Sign Up
-                        </button>
-
-                    </form>
-
-                </div>
-            </div>
-
-
-            <div class="col-xs-12 col-sm-12 col-md-6">
-                <div class="main well">
-
-                    <h3>Log In</h3>
-                    <div class="row">
-                        <div class="col-xs-7 col-sm-7 col-md-7 center-block">
-                            <a class="btn btn-block btn-social btn-facebook"
-                               onClick="FB.login(function(response) {rssnext.social_login.checkLoginState();});">
-                                <i class="fa fa-facebook"></i>Log in with Facebook
-                            </a>
-                        </div>
-
-                    </div>
-                    <div class="login-or">
-                        <span class="span-or">or</span>
-                    </div>
-
-                    <form id="login-form" class="login" method="POST" action="account_actions.php">
-                        <input type="hidden" name="action" value="login">
-
-                        <div class="form-group">
-
-                            <label for="id_login">E-mail</label>
-                            <input type="email" class="form-control" id="id_username"
-                                   name="username">
-
-                        </div>
-
-                        <div class="form-group">
-                            <label for="id_password">Password</label>
-                            <input type="password" class="form-control" id="id_password"
-                                   name="password">
-
-                        </div>
-
-                        <button type="submit" class="btn btn btn-primary">
-                            Log In
-                        </button>
-
-                    </form>
-
-                </div>
-            </div>
-
+    <div class="page-header">
+        <h1>RSSNext
+            <small id="header-small">&nbsp;A single click takes you to your next unread item.</small>
+        </h1>
     </div>
+    <div class="row">
+
+        <div class="col-xs-12 col-sm-12 col-md-6 pull-right">
+            <div class="main well opaque">
+
+                <h3>Sign Up</h3>
+                <div class="row">
+                    <div class="col-xs-7 col-sm-7 col-md-7 center-block">
+                        <a class="btn btn-block btn-social btn-facebook"
+                           onClick="FB.login(function(response) {rssnext.social_login.checkLoginState();});">
+                            <i class="fa fa-facebook"></i>Sign up with Facebook
+                        </a>
+                    </div>
+                </div>
+                <div class="login-or">
+                    <span class="span-or">or</span>
+                </div>
+
+                <form id="signup-form" class="login" method="POST" action="account_actions.php">
+                    <input type="hidden" name="action" value="create_account">
+
+                    <div class="form-group">
+                        <label for="id_username">E-mail</label>
+                        <input type="username" class="form-control" id="id_username" name="username">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="id_password">Password</label>
+                        <input type="password" class="form-control" id="id_password" name="password">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="id_password_confirm">Password (again)</label>
+                        <input type="password" class="form-control" id="id_password_confirm" name="password_confirm">
+                    </div>
+
+                    <button type="submit" class="btn btn btn-primary">
+                        Sign Up
+                    </button>
+
+                </form>
+
+            </div>
+        </div>
 
 
+        <div class="col-xs-12 col-sm-12 col-md-6">
+            <div class="main well">
+
+                <h3>Log In</h3>
+                <div class="row">
+                    <div class="col-xs-7 col-sm-7 col-md-7 center-block">
+                        <a class="btn btn-block btn-social btn-facebook"
+                           onClick="FB.login(function(response) {rssnext.social_login.checkLoginState();});">
+                            <i class="fa fa-facebook"></i>Log in with Facebook
+                        </a>
+                    </div>
+
+                </div>
+                <div class="login-or">
+                    <span class="span-or">or</span>
+                </div>
+
+                <form id="login-form" class="login" method="POST" action="account_actions.php">
+                    <input type="hidden" name="action" value="login">
+
+                    <div class="form-group">
+                        <label for="id_login">E-mail</label>
+                        <input type="email" class="form-control" id="id_username" name="username">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="id_password">Password</label>
+                        <input type="password" class="form-control" id="id_password"name="password">
+                    </div>
+
+                    <button type="submit" class="btn btn btn-primary">
+                        Log In
+                    </button>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
 </div>
 
 </body>
