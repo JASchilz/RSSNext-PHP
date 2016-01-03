@@ -8,6 +8,9 @@ if (Util::initSession()) {
     header('Location: control_panel.php');
 }
 
+$alertMessageClass = Util::getAlertMessage()[ALERT_MESSAGE_CLASS];
+$alertMessageContent = Util::getAlertMessage()[ALERT_MESSAGE_CONTENT];
+
 ?>
 <!DOCTYPE html>
 
@@ -37,6 +40,11 @@ if (Util::initSession()) {
     <script type="application/x-javascript" src="includes/js/social_login.js"></script>
 
 </head>
+
+<body>
+<div id="alert-message" class="alert <?php echo $alertMessageClass;?>" role="alert">
+        <?php echo $alertMessageContent;?>
+</div>
 
 <div class="container">
 

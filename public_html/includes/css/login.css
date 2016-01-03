@@ -15,10 +15,26 @@ html, body {
 }
 
 body {
-  padding-top: 15px;
   font-size: 12px
 }
 
+
+#header-small {
+  color:white;
+  font-size:.5em;
+  display:none;
+}
+
+#alert-message {
+  position:fixed;
+  width:80%;
+  margin-left:10%;
+  font-size:17px;
+}
+
+#alert-message.hidden {
+  display:none;
+}
 
 a, a:focus, a:hover {
   color: #222;
@@ -34,11 +50,6 @@ a, a:focus, a:hover {
 
 .center-block { float: none; }
 
-#header-small {
-  color:white;
-  font-size:.5em;
-  display:none;
-}
 
 .main {
   max-width: 80%;

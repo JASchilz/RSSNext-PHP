@@ -18,6 +18,8 @@ class WebTest extends PHPUnit_Extensions_Selenium2TestCase
     protected $feed1 = "http://rss.cnn.com/rss/cnn_topstories.rss";
     protected $feed2 = "http://rss.cnn.com/rss/cnn_us.rss";
 
+    protected $alertMessages = ALERT_MESSAGES;
+
     protected function setUp()
     {
         $this->setBrowser('firefox');
@@ -73,6 +75,10 @@ class WebTest extends PHPUnit_Extensions_Selenium2TestCase
 
         $this->assertEquals('RSSNext - One Click Takes You To Your Next Unread Item', $this->title());
         $this->assertContains('passwords_dont_match', $this->url());
+        $this->assertContains(
+            $this->alertMessages['passwords_dont_match'][ALERT_MESSAGE_CONTENT],
+            $this->byId('alert-message')->text()
+        );
     }
 
     public function testAccountCreationAndLogoutAndLogin()
@@ -85,6 +91,10 @@ class WebTest extends PHPUnit_Extensions_Selenium2TestCase
         $this->byId("logout")->click();
         sleep(2);
         $this->assertEquals('RSSNext - One Click Takes You To Your Next Unread Item', $this->title());
+        $this->assertContains(
+            $this->alertMessages['logged_out'][ALERT_MESSAGE_CONTENT],
+            $this->byId('alert-message')->text()
+        );
 
         // Login
         $this->byCssSelector('#login-form #id_username')->click();
@@ -112,6 +122,11 @@ class WebTest extends PHPUnit_Extensions_Selenium2TestCase
         // Create user with same username
         $this->createUser();
         $this->assertContains('duplicate_username', $this->url());
+
+        $this->assertContains(
+            $this->alertMessages['duplicate_username'][ALERT_MESSAGE_CONTENT],
+            $this->byId('alert-message')->text()
+        );
     }
 
     public function testAddFeed()
