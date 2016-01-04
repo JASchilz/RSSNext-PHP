@@ -4,13 +4,14 @@ namespace RSSNext\Feed;
 
 use RSSNext\Connection\Connection;
 use RSSNext\Exception\NotFoundException;
+use RSSNext\Model\Model;
 use RSSNext\Util\Util;
 
 /**
  * Class Feed
  * @package RSSNext\Feed
  */
-class Feed
+class Feed extends Model
 {
 
     /** @var string */
@@ -68,7 +69,7 @@ class Feed
     public static function fromUrl($urlDirty)
     {
         // Provide a feed object, given a url
-        $con = Connection::getConnection();
+        $con = static::getConnection();
 
         $url = mysqli_real_escape_string($con, $urlDirty);
 
@@ -174,7 +175,7 @@ EOT;
      */
     public function update()
     {
-        $con = Connection::getConnection();
+        $con = static::getConnection();
 
         $feedContents = $this->getFeedContents($this->url);
         $xmlFeedContents = new \SimpleXmlElement($feedContents);
@@ -231,7 +232,7 @@ EOT;
     protected static function parseItem($entry, $feedId)
     {
 
-        $con = Connection::getConnection();
+        $con = static::getConnection();
 
         $item = array();
 
@@ -260,7 +261,7 @@ EOT;
      */
     public static function getFeeds()
     {
-        $con = Connection::getConnection();
+        $con = static::getConnection();
         $query = "SELECT `url`, `feed_id` FROM `feed`";
 
         $result = mysqli_query($con, $query);
