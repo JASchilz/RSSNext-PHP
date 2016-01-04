@@ -17,6 +17,25 @@ class Util
     }
 
     /**
+     * Begin the php session.
+     *
+     * @return void
+     */
+    protected static function startSession()
+    {
+        session_start();
+    }
+
+    /**
+     * @param string $header
+     * @return void
+     */
+    protected static function sendHeader($header)
+    {
+        header($header);
+    }
+
+    /**
      * Format a php array into a single-string list suitable for a MySQL query.
      *
      * @param array $array
@@ -54,7 +73,7 @@ class Util
     {
         $lifetime=60 * 60 * 24 * 60;
         session_set_cookie_params($lifetime);
-        session_start();
+        static::startSession();
 
         return static::getUserId();
     }
@@ -70,7 +89,7 @@ class Util
         $userId = static::initSession();
 
         if (!$userId) {
-            header("Location: /index.php?msg=expired_login");
+            static::sendHeader("Location: /index.php?msg=expired_login");
             return false;
         } else {
             return $userId;
