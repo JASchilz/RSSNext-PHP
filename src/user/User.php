@@ -3,6 +3,7 @@
 namespace RSSNext\User;
 
 use RSSNext\Exception\DuplicateUsernameException;
+use RSSNext\Model\Model;
 use RSSNext\Util\Util;
 use RSSNext\Connection\Connection;
 use RSSNext\Feed\Feed;
@@ -12,7 +13,7 @@ use RSSNext\Exception\UsernameOrPasswordInvalidException;
  * Class User encapsulates an account-holding visitor the site
  * @package RSSNext\User
  */
-class User
+class User extends Model
 {
 
     /** @var string */
@@ -55,7 +56,7 @@ class User
     public static function fromFacebookId($facebookId)
     {
 
-        $con = Connection::getConnection();
+        $con = static::getConnection();
 
         // Check if this facebook_id is already in our database of facebook users
         $query = "SELECT * FROM `facebook_to_user` WHERE `facebook_id`='$facebookId'";
@@ -88,7 +89,7 @@ class User
     public static function create($usernameDirty, $passwordDirty)
     {
 
-        $con = Connection::getConnection();
+        $con = static::getConnection();
 
         $username = mysqli_real_escape_string($con, $usernameDirty);
         $hash = password_hash($passwordDirty, PASSWORD_DEFAULT);
@@ -120,7 +121,7 @@ class User
     public static function validate($usernameDirty, $passwordDirty)
     {
 
-        $con = Connection::getConnection();
+        $con = static::getConnection();
 
         $username = mysqli_real_escape_string($con, $usernameDirty);
 
@@ -158,7 +159,7 @@ WHERE  `feed_id` IN (SELECT `feed_id`
                      WHERE  `user_id` = '{$this->userId}')
 EOT;
 
-        $result = mysqli_query(Connection::getConnection(), $query);
+        $result = mysqli_query(static::getConnection(), $query);
 
         $feeds = [];
         while ($row = mysqli_fetch_array($result)) {
@@ -177,7 +178,7 @@ EOT;
     public function removeFeed($feedId)
     {
 
-        $con = Connection::getConnection();
+        $con = static::getConnection();
 
         $query = "DELETE FROM `user_to_feed` WHERE `user_id` = '$this->userId' AND `feed_id` = '$feedId'";
         $con->query($query);
@@ -196,7 +197,7 @@ EOT;
      */
     public function addFeed(Feed $feed)
     {
-        $con = Connection::getConnection();
+        $con = static::getConnection();
 
         $lastItemId = $feed->getLastItemId() - 1;
 
@@ -240,7 +241,7 @@ FROM   (SELECT *
 WHERE  item.item_id > user_to_feed.item_id_last_read
 EOT;
 
-        $result = mysqli_query(Connection::getConnection(), $query);
+        $result = mysqli_query(static::getConnection(), $query);
 
         $link = "";
         if ($result->num_rows == 1) {
@@ -256,7 +257,7 @@ SET    item_id_last_read='{$row['MIN(item_id)']}'
 WHERE  user_id='{$this->getUserId()}'
 AND    feed_id='{$row['feed_id']}'
 EOT;
-                $result = mysqli_query(Connection::getConnection(), $query);
+                $result = mysqli_query(static::getConnection(), $query);
 
             }
         }
