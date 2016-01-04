@@ -37,11 +37,18 @@ class UtilTest extends PHPUnit_Framework_TestCase
 
     public function testInitOrBump()
     {
+        // User not logged in
         $_SESSION["userId"] = null;
 
-        MockUtil::initOrBump();
-
+        $this->assertFalse(MockUtil::initOrBump());
         $this->assertContains('msg=expired_login', MockUtil::$headers[0]);
+
+        // User logged in
+        $userId = "u" . (string)rand();
+        $_SESSION["userId"] = $userId;
+
+        $this->assertEquals($userId, MockUtil::initOrBump());
+
     }
 
     public function testGetAlertMessage()
