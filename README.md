@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/JASchilz/RSSNext-PHP.svg?branch=master)](https://travis-ci.org/JASchilz/RSSNext-PHP)
+[![Code Climate](https://codeclimate.com/github/JASchilz/RSSNext-PHP/badges/gpa.svg)](https://codeclimate.com/github/JASchilz/RSSNext-PHP)
 
 
 RSSNext-PHP
