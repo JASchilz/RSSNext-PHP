@@ -47,7 +47,7 @@ Travis-CI provides this project with comprehensive tests on each push, allowing 
 
 ### Continuous Deployment
 
-Every merge to master undergoes a comphrehensive set of user-acceptance tests, so every merge to master is safe to immediately deploy to production. This repository uses a GitHub webhook to alert the server at `php.rssnext.net` when a successful merge has been made, and the server responds by immediately downloading and deploying the updated code.
+Every merge to master undergoes a comprehensive set of user-acceptance tests, so every merge to master is safe to immediately deploy to production. This repository uses a GitHub webhook to alert the server at `php.rssnext.net` when a successful merge has been made, and the server responds by immediately downloading and deploying the updated code.
 
 
 Things I Would Do Differently
