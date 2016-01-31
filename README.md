@@ -55,7 +55,7 @@ Things I Would Do Differently
 
 For a real-world, production project I would use a web framework such as [Symfony](https://symfony.com/), including an ORM like [Propel](http://propelorm.org/); frameworks like these provide reusable solutions to common tasks, and I've used similar tools to reduce project lines-of-code by 90%. But for this portfolio project, I chose instead to demonstrate basic design in HTML, PHP, and MySQL.
 
-See the [issue tracker](https://github.com/UWEnrollmentManagement/Framework/issues/) for things that I would still like to improve about this project, including issues that I have already acted to close.
+See the [issue tracker](https://github.com/JASchilz/RSSNext-PHP/issues/) for things that I would still like to improve about this project, including issues that I have already acted to close.
 
 Installation
 ------------
